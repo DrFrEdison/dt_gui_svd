@@ -1,0 +1,20 @@
+---
+title: "About"
+author: "MK"
+date: "`r Sys.Date()`"
+mainfont: Eurostile Next LT Pro
+output: html_document
+---
+
+### <span style="color:#2f407a"> DT:GUI_READ_SPC - Lese und plotte .spc-Dateien </span>
+
+
+* <span style="color:#2f407a"> Ziehe .csv Dateien auf die Schaltfläche **csv-Dateien** oder Durchsuche den Computer durch klicken auf diese Schaltfläche. DT:SVD wird anschließend eine SVD-Analyse durchführen. </span>
+
+* <span style="color:#2f407a"> Durch aktivieren von **Mean Center Data** werden die Daten Mittelwert-Normalisiert. </span>
+
+* <span style="color:#2f407a"> Detailanalyse durch Auswahl des **Rank**. </span>  
+
+* <span style="color:#2f407a"> Fokus auf Rank-Bereich durch **Choose Rank range**. </span>
+
+* <span style="color:#2f407a"> Datumsbereich kann nach Upload der .csv-Datei eingegrenzt werden. </span>
