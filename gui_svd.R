@@ -1,6 +1,7 @@
 library(shiny)
 library(data.table)
 library(shinyTime)
+library(markdown)
 
 transfer_csv.num.col <- function(csv.file){
   numcol <- suppressWarnings(as.numeric(gsub("X", "",  colnames(csv.file))))
@@ -188,22 +189,13 @@ server <- function(input, output) {
       filteredData <- data$datetime >= as.POSIXct( as.character( paste(startDate, startTime)), tz = "UTC") & 
         data$datetime <= as.POSIXct( as.character( paste(endDate, endTime)), tz = "UTC")
       
-      message( startDate )
-      message( endDate )
-      message( startTime )
-      message( endTime )
-      
-      message( as.POSIXct( as.character( paste(startDate, startTime)), tz = "UTC") )
-      message(  as.POSIXct( as.character( paste(endDate, endTime)), tz = "UTC") )
-      message( filteredData )
-      
-       if (any(filteredData)) {
+      if (any(filteredData)) {
         
         par(mar = c(4, 4, 3, .25))
         plot(data$datetime[filteredData], data$svd$u[filteredData, input$rank],
              xlab = "Date/Time", ylab = "Left Singular Values"
              , main = paste("Left Singular Values, Rank =", input$rank))
-       }
+      }
     }
   })
   
