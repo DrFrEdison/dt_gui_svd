@@ -9,7 +9,7 @@ output: html_document
 ### <span style="color:#2f407a"> DT:GUI_READ_SPC - Lese und plotte .spc-Dateien </span>
 
 
-* <span style="color:#2f407a"> Ziehe .csv Dateien auf die Schaltfläche **csv-Dateien** oder Durchsuche den Computer durch klicken auf diese Schaltfläche. DT:SVD wird anschließend eine SVD-Analyse durchführen. </span>
+* <span style="color:#2f407a"> Ziehe .csv Dateien auf die Schaltfläche **csv-Dateien** oder Durchsuche den Computer durch klicken auf diese Schaltfläche. DT:SVD wird anschließend eine SVD-Analyse durchführen. Momentan muss die Datumsspalte "datetime" heißen. Dateiupload auf 1,5 GB beschränkt. </span>
 
 * <span style="color:#2f407a"> Durch aktivieren von **Mean Center Data** werden die Daten Mittelwert-Normalisiert. </span>
 

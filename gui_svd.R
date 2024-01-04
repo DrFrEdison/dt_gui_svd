@@ -39,58 +39,50 @@ ui <- fluidPage(
     sidebarPanel(
       width = 2,  # Adjust the width of the sidebar
       
-      fileInput("file_upload"
-                , ""
-                , multiple = T
-                , accept = c(".csv")
-                , buttonLabel = paste0("csv-Dateien")
-                , placeholder = NA
-                , width = "100%")
-      
-      ),
-    
+      fileInput("file_upload", "", multiple = T, accept = c(".csv"), buttonLabel = "csv-Dateien", placeholder = NA, width = "100%"),
       checkboxInput("meancenter", "Mean Center Data", TRUE),
       numericInput("rank", "Choose Rank", 1, min = 1, max = 409),
       sliderInput("xrange", "Choose Rank Range", min = 1, max = 409, value = c(1, 409)),
-      uiOutput("dateTimeRangeInput")  # Placeholder for dynamic date and time inputs
-      
+      uiOutput("dateTimeRangeInput")  # Correctly placed within sidebarPanel
     ),
+    
     mainPanel(
       tabsetPanel(
         type = "tabs",
+        
         tabPanel("SVD Analysis", 
-      plotOutput("plot1"),
-      fluidRow(  # Placing plot2 and plot3 next to each other
-        column(width = 6, plotOutput("plot2")),
-        column(width = 6, plotOutput("plot3"))
+                 plotOutput("plot1"),
+                 fluidRow(  # Placing plot2 and plot3 next to each other
+                   column(width = 6, plotOutput("plot2")),
+                   column(width = 6, plotOutput("plot3"))
+                 )
+        ),
+        
+        tabPanel("Über",
+                 fluidRow(
+                   column(6,
+                          includeMarkdown("about.Rmd")# Markdown("about.md")
+                   )
+                 )
+        ),
+        
+        tabPanel("Versionsverlauf",
+                 fluidRow(
+                   column(6,
+                          includeMarkdown("Version.Rmd")# Markdown("about.md")
+                   )
+                 )
+        ),
+        
+        tabPanel("Github",
+                 fluidRow(
+                   column(6,
+                          includeMarkdown("Github.Rmd")# Markdown("about.md")
+                   )
+                 )
+        )
       )
-    ),
-    
-    tabPanel("Über",
-             fluidRow(
-               column(6,
-                      includeMarkdown("about.Rmd")# Markdown("about.md")
-               )
-             )
-    ),
-    
-    tabPanel("Versionsverlauf",
-             fluidRow(
-               column(6,
-                      includeMarkdown("Version.Rmd")# Markdown("about.md")
-               )
-             )
-    ),
-    
-    tabPanel("Github",
-             fluidRow(
-               column(6,
-                      includeMarkdown("Github.Rmd")# Markdown("about.md")
-               )
-             )
     )
-    
-    
   )
 )
 
@@ -99,10 +91,10 @@ server <- function(input, output) {
   
   # Reactive expression to read and process the data
   data_reactive <- reactive({
-    req(input$file1)
+    req(input$file_upload)
     
     # Read the file
-    df <- fread(input$file1$datapath, sep = ";", dec = ",")
+    df <- fread(input$file_upload$datapath, sep = ";", dec = ",")
     df <- df[ order(df$datetime) , ]
     df$datetime <- as.POSIXct( as.character( df$datetime ), tz = "UTC" )
     
@@ -190,15 +182,28 @@ server <- function(input, output) {
     if (!is.null(data$datetime) && !is.null(input$startDate) && !is.null(input$endDate)) {
       startDate <- as.POSIXct(input$startDate)
       endDate <- as.POSIXct(input$endDate)
+      startTime <- strftime(as.character(input$startTime), format = "%H:%M:%S")
+      endTime <- strftime(as.character(input$endTime), format = "%H:%M:%S")
       
-      filteredData <- data$datetime >= startDate & data$datetime <= endDate
-      if (any(filteredData)) {
+      filteredData <- data$datetime >= as.POSIXct( as.character( paste(startDate, startTime)), tz = "UTC") & 
+        data$datetime <= as.POSIXct( as.character( paste(endDate, endTime)), tz = "UTC")
+      
+      message( startDate )
+      message( endDate )
+      message( startTime )
+      message( endTime )
+      
+      message( as.POSIXct( as.character( paste(startDate, startTime)), tz = "UTC") )
+      message(  as.POSIXct( as.character( paste(endDate, endTime)), tz = "UTC") )
+      message( filteredData )
+      
+       if (any(filteredData)) {
         
         par(mar = c(4, 4, 3, .25))
         plot(data$datetime[filteredData], data$svd$u[filteredData, input$rank],
              xlab = "Date/Time", ylab = "Left Singular Values"
-             , main = "Left Singular Values")
-      }
+             , main = paste("Left Singular Values, Rank =", input$rank))
+       }
     }
   })
   

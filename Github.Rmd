@@ -8,4 +8,4 @@ output: html_document
 
 ### <span style="color:#2f407a"> Bug gefunden, beim Paket mitarbeiten oder andere Themen? </span>
 
-* <span style="color:#2f407a"> Bitte hier https://github.com/DrFrEdison/dt_gui_read_spc melden </span>
+* <span style="color:#2f407a"> Bitte hier https://github.com/DrFrEdison/dt_gui_svd melden </span>
