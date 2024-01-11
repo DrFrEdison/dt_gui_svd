@@ -17,4 +17,8 @@ output: html_document
 
 * <span style="color:#2f407a"> Fokus auf Rank-Bereich durch **Choose Rank range**. </span>
 
+* <span style="color:#2f407a"> Wellenlängenbereich kann durch **Choose lambda for SVD** eingegrenzt werden. Eine Neu-Kalkulation findet mit den entsprechenden Wellenlängen findet statt. </span>
+
 * <span style="color:#2f407a"> Datumsbereich kann nach Upload der .csv-Datei eingegrenzt werden. </span>
+
+* <span style="color:#2f407a"> x-Achse kann durch aktivieren von **time-resolved or consecutively** zeitaufgelöst oder absolut dargestellt werden. </span>
